@@ -1,0 +1,25 @@
+.flex {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.signup-title-wrap {
+    /*background-color: blueviolet;*/
+    text-align: center;
+}
+
+.signup-title {
+    font-size: 54px;
+    font-weight: bold;
+    margin-bottom: 50px;
+}
+
+.flex-center {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../static/signup.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        function signup_db() {
+            let id = $('#id').val()
+            let pw = $('#pw').val()
+            if (id === '') {
+                alert('사용하실 아이디를 입력하세요.')
+            } else if (pw === '') {
+                alert('사용하실 비밀번호를 입력하세요')
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "/signup_db",
+                    data: {id: id, password: pw},
+                    success: function (response) {
+                        $(location).attr('href', '/');
+                    }
+                })
+            }
+        }
+    </script>
+</head>
+<body>
+
+
+<div class="container">
+    <div class="row flex-center">
+        <div>
+            <div class="col-12 signup-title-wrap">
+                <h1 class="signup-title">id, password !</h1>
+            </div>
+            <div>
+
+                <div class="form-group">
+                    <label>ID</label>
+                    <input type="email" class="form-control" id="id">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control" id="pw">
+                </div>
+                <button class="btn btn-success btn-lg btn-block" onclick="signup_db()">Sign up
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+.flex {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-box {
+    width: 100%;
+    height: 20vh;
+    margin-bottom: 50px;
+}
+
+.nav-box a {
+    font-size: 24px;
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+
+}
+
+.nav-box a:hover {
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+    text-underline: none;
+    color: black;
+}
+
+.nav2-wrap {
+    /*background-color: blueviolet;*/
+    text-align: right;
+}
+
+.tap {
+    color: gray;
+    margin: 20px 0;
+    width: 30%;
+    height: 30px;
+    padding: 30px;
+    box-sizing: border-box;
+    border-top:1px solid gray ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tap div:hover {
+    cursor: pointer;
+    font-weight: bold;
+}

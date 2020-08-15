@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../static/profil.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            recordGet()
+            chagecolor1()
+        });
+
+        function recordGet() {
+            chagecolor1()
+            $('#why-wrap').empty()
+            $.ajax({
+                type: "GET",
+                url: "/record-get",
+                data: {},
+                success: function (response) {
+
+                    for (let i = 0; i < response.length; i++) {
+                        let stat = response[i]['stat']
+                        let why = response[i]['why']
+                        let time = response[i]['time']
+                        let temp_html = `<div class="col-12" style="padding: 0">
+                                            <div style="border: 1px solid black; padding: 20px; box-sizing: border-box; margin-bottom: 10px">
+                                                <div>${time}<strong>${stat}</strong></div>
+                                                <hr>
+                                                <div>${why}</div>
+                                            </div>
+                                        </div>`
+                        $('#why-wrap').append(temp_html)
+                    }
+                }
+            })
+        }
+
+        function recordGetGood() {
+            chagecolor2()
+            $('#why-wrap').empty()
+            $.ajax({
+                type: "GET",
+                url: "/record-get",
+                data: {},
+                success: function (response) {
+
+                    for (let i = 0; i < response.length; i++) {
+                        if (response[i]['stat'] === 'good') {
+                            let stat = response[i]['stat']
+                            let why = response[i]['why']
+                            let time = response[i]['time']
+                            let temp_html = `<div class="col-12" style="padding: 0">
+                                            <div style="border: 1px solid black; padding: 20px; box-sizing: border-box; margin-bottom: 10px">
+                                                <div>${time}<strong>${stat}</strong></div>
+                                                <hr>
+                                                <div>${why}</div>
+                                            </div>
+                                        </div>`
+                            $('#why-wrap').append(temp_html)
+                        }
+                    }
+                }
+            })
+        }
+
+        function recordGetbad() {
+            chagecolor3()
+            $('#why-wrap').empty()
+            $.ajax({
+                type: "GET",
+                url: "/record-get",
+                data: {},
+                success: function (response) {
+
+                    for (let i = 0; i < response.length; i++) {
+                        if (response[i]['stat'] === 'bad') {
+                            let stat = response[i]['stat']
+                            let why = response[i]['why']
+                            let time = response[i]['time']
+                            let temp_html = `<div class="col-12" style="padding: 0">
+                                            <div style="border: 1px solid black; padding: 20px; box-sizing: border-box; margin-bottom: 10px">
+                                                <div>${time}<strong>${stat}</strong></div>
+                                                <hr>
+                                                <div>${why}</div>
+                                            </div>
+                                        </div>`
+                            $('#why-wrap').append(temp_html)
+                        }
+                    }
+                }
+            })
+        }
+
+        function chagecolor1() {
+            $('.tap-1').css({'color': 'black', 'font-weight': 'bold', 'border-top': '2px solid black'})
+            $('.tap-2').css({'color': 'gray', 'font-weight': 'bold', 'border-top': '1px solid gray'})
+            $('.tap-3').css({'color': 'gray', 'font-weight': 'bold', 'border-top': '1px solid gray'})
+        }
+
+        function chagecolor2() {
+            $('.tap-1').css({'color': 'gray', 'font-weight': 'bold', 'border-top': '1px solid gray'})
+            $('.tap-2').css({'color': 'black', 'font-weight': 'bold', 'border-top': '2px solid black'})
+            $('.tap-3').css({'color': 'gray', 'font-weight': 'bold', 'border-top': '1px solid gray'})
+
+        }
+
+        function chagecolor3() {
+            $('.tap-1').css({'color': 'gray', 'font-weight': 'bold', 'border-top': '1px solid gray'})
+            $('.tap-2').css({'color': 'gray', 'font-weight': 'bold', 'border-top': '1px solid gray'})
+            $('.tap-3').css({'color': 'black', 'font-weight': 'bold', 'border-top': '2px solid black'})
+        }
+
+        function out() {
+            $.ajax({
+                type: "GET",
+                url: "/out",
+                data: {},
+                success: function (response) {
+                    $(location).attr('href', '/');
+
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="row flex nav-box">
+        <div class="col-1">
+            <a href="/profil">홈</a></div>
+        <div class="col-7 nav2-wrap">
+<!--            <a href="/profil" style="margin-right: 10px;font-weight: bold">내 프로필</a>-->
+            <a href="/record" style="margin-right: 10px">기록하기</a>
+            <a onclick="out()">로그아웃</a>
+        </div>
+    </div>
+</div>
+<!--<div class="container">-->
+<!--    <div class="row">-->
+<!--        <div class="col-12">-->
+<!--            <div><h3 style="display: inline-block">김경록</h3> <a href="">공유하기</a></div>-->
+<!--            <p>저는 이런사람 인데요</p>-->
+<!--            <div>구독자 3 <a href="">구독</a></div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="flex">
+                <div class="tap tap-1">
+                    <div onclick=recordGet()>both 25</div>
+                </div>
+                <div class="tap tap-2" onclick=recordGetGood()>
+                    <div>good 4</div>
+                </div>
+                <div class="tap tap-3" onclick=recordGetbad()>
+                    <div>bad 7</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-12" id="why-wrap"></div>
+    </div>
+</div>
+</body>
+</html>

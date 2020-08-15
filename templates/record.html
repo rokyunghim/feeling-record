@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../static/record.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+
+        function recordPostGood() {
+            let date = new Date()
+            let year = date.getFullYear()
+            let month = date.getMonth()+1
+            let day = date.getDate()
+            let hour = date.getHours()
+            let minutes = date.getMinutes()
+            let time = year + '년 ' + month + '월 ' + day + '일 ' + hour + '시 ' + minutes + '분  '
+            let why = $('#why').val();
+            $.ajax({
+                type: "POST", // GET 방식으로 요청한다.
+                url: "/record-post",
+                data: {'why': why, 'stat': 'good', 'time': time}, // 요청하면서 함께 줄 데이터 (GET 요청시엔 비워두세요)
+                success: function (response) { // 서버에서 준 결과를 response라는 변수에 담음
+                    $(location).attr('href', '/');
+
+                }
+            })
+        }
+
+        function recordPostBad() {
+            let date = new Date()
+            let year = date.getFullYear()
+            let month = date.getMonth()+1
+            let day = date.getDate()
+            let hour = date.getHours()
+            let minutes = date.getMinutes()
+            let time = year + '년 ' + month + '월 ' + day + '일 ' + hour + '시 ' + minutes + '분  '
+            let why = $('#why').val();
+            $.ajax({
+                type: "POST", // GET 방식으로 요청한다.
+                url: "/record-post",
+                data: {'why': why, 'stat': 'bad', 'time': time}, // 요청하면서 함께 줄 데이터 (GET 요청시엔 비워두세요)
+                success: function (response) { // 서버에서 준 결과를 response라는 변수에 담음
+                    $(location).attr('href', '/');
+                }
+            })
+        }
+
+        function goodRecord() {
+            $('#btn-box').empty()
+            $('#btn-box').append(`<div class="input-group">
+                                        <textarea class="form-control" id="why" placeholder="Why do you feel good?"
+                                                  style="margin-bottom: 10px"></textarea>
+                                        <button type="button" class="btn btn-secondary btn-lg btn-block" onclick=recordPostGood()>record!</button>
+                                    </div>`)
+        }
+
+        function badRecord() {
+            $('#btn-box').empty()
+            $('#btn-box').append(`<div class="input-group">
+                                        <textarea class="form-control" id="why" placeholder="Why are you not feeling good?"
+                                                  style="margin-bottom: 10px"></textarea>
+                                        <button type="button" class="btn btn-secondary btn-lg btn-block" onclick=recordPostBad() >record!</button>
+                                    </div>`)
+        }
+
+        function out() {
+            $.ajax({
+                type: "GET",
+                url: "/out",
+                data: {},
+                success: function (response) {
+                    $(location).attr('href', '/');
+
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="row flex nav-box" style=" width: 100%;
+    height: 20vh;">
+        <div class="col-1">
+            <a href="/profil">홈</a></div>
+        <div class="col-7 nav2-wrap">
+<!--            <a href="/profil" style="margin-right: 10px">내 프로필</a>-->
+            <a href="/record" style="font-weight: bold;margin-right: 10px">기록하기</a>
+            <a onclick="out()">로그아웃</a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row flex-center">
+            <div>
+                <div class="col-12 record-title-wrap">
+                    <h1 class="record-title">what, feeling, now ?</h1>
+                    <div id="btn-box">
+                        <button class="btn btn-primary btn-lg" onclick=goodRecord()>good</button>
+                        <button class="btn btn-danger btn-lg" onclick=badRecord()>bad</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
