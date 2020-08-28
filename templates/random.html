@@ -87,7 +87,7 @@
             font-weight: bold;
         }
 
-        #btn {
+         #btn {
             outline: none;
             border: 0;
             background-color: transparent;
@@ -106,13 +106,11 @@
             }
 
         }
-
     </style>
     <script>
 
         $(document).ready(function () {
             recordGet()
-            chagecolor1()
         });
 
         function deleteDB(id) {
@@ -150,11 +148,10 @@
         }
 
         function recordGet() {
-            chagecolor1()
             $('#why-wrap').empty()
             $.ajax({
                 type: "GET",
-                url: "/record-get",
+                url: "/all-get",
                 data: {},
                 success: function (response) {
                     for (let i = 0; i < response.length; i++) {
@@ -165,9 +162,10 @@
                         let ID = response[i]['_id']
                         let temp_html = `<div class="col-12" style="padding: 0">
                                             <div style="border: 1px solid black; padding: 20px; box-sizing: border-box; margin-bottom: 10px">
-                                                <div style="font-size: 14px">${time}<strong>${stat}</strong><div style="float:right;"><button id=${ID} style="outline: none; border: 0; background-color: transparent; cursor: pointer" onclick="updateDB(this.id)">수정</button><button id=${ID} style="outline: none; border: 0; background-color: transparent; cursor: pointer" onclick="deleteDB(this.id)">삭제</button></div>
+                                                <div >${time}<strong>${stat}</strong><div style="float:right;">${username}</div>
                                                 <hr>
                                                 <div id="wrap${i}">${why}</div>
+
                                             </div>
                                         </div>
 
@@ -181,102 +179,13 @@
             })
         }
 
-
-        function recordGetGood() {
-            chagecolor2()
-            $('#why-wrap').empty()
-            $.ajax({
-                type: "GET",
-                url: "/record-get",
-                data: {},
-                success: function (response) {
-
-                    for (let i = 0; i < response.length; i++) {
-                        if (response[i]['stat'] === 'good') {
-                            let stat = response[i]['stat']
-                            let why = response[i]['why']
-                            let time = response[i]['time']
-                            let ID = response[i]['_id']
-                            let temp_html = `<div class="col-12" style="padding: 0">
-                                            <div style="border: 1px solid black; padding: 20px; box-sizing: border-box; margin-bottom: 10px">
-                                                <div style="font-size: 14px">${time}<strong>${stat}</strong><div style="float:right;"><button id=${ID} style="outline: none; border: 0; background-color: transparent; cursor: pointer" onclick="updateDB(this.id)">수정</button><button id=${ID} style="outline: none; border: 0; background-color: transparent; cursor: pointer" onclick="deleteDB(this.id)">삭제</button></div></div>
-                                                <hr>
-                                                <div>${why}</div>
-                                            </div>
-                                        </div>`
-                            $('#why-wrap').append(temp_html)
-                        }
-                    }
-                }
-            })
-        }
-
-        function recordGetbad() {
-            chagecolor3()
-            $('#why-wrap').empty()
-            $.ajax({
-                type: "GET",
-                url: "/record-get",
-                data: {},
-                success: function (response) {
-                    function deleteDB(username, why, time) {
-                        $.ajax({
-                            type: "POST", // GET 방식으로 요청한다.
-                            url: "/delete",
-                            data: {username: username, why: why, time: time}, // 요청하면서 함께 줄 데이터 (GET 요청시엔 비워두세요)
-                            success: function (response) { // 서버에서 준 결과를 response라는 변수에 담음
-                                console.log(response) // 서버에서 준 결과를 이용해서 나머지 코드를 작성
-                            }
-                        })
-                    }
-
-                    for (let i = 0; i < response.length; i++) {
-                        if (response[i]['stat'] === 'bad') {
-                            let stat = response[i]['stat']
-                            let why = response[i]['why']
-                            let time = response[i]['time']
-                            let ID = response[i]['_id']
-                            let temp_html = `<div class="col-12" style="padding: 0">
-                                            <div style="border: 1px solid black; padding: 20px; box-sizing: border-box; margin-bottom: 10px">
-                                                <div style="font-size: 14px">${time}<strong>${stat}</strong><div style="float:right;"><button id=${ID} style="outline: none; border: 0; background-color: transparent; cursor: pointer" onclick="updateDB(this.id)">수정</button><button id=${ID} style="outline: none; border: 0; background-color: transparent; cursor: pointer" onclick="deleteDB(this.id)">삭제</button></div></div>
-                                                <hr>
-                                                <div>${why}</div>
-                                            </div>
-                                        </div>`
-                            $('#why-wrap').append(temp_html)
-                        }
-                    }
-                }
-            })
-        }
-
-        function chagecolor1() {
-            $('.tap-1').css({'color': 'black', 'font-weight': 'bold', 'border-top': '2px solid black'})
-            $('.tap-2').css({'color': 'gray', 'font-weight': 'bold', 'border-top': '1px solid gray'})
-            $('.tap-3').css({'color': 'gray', 'font-weight': 'bold', 'border-top': '1px solid gray'})
-        }
-
-        function chagecolor2() {
-            $('.tap-1').css({'color': 'gray', 'font-weight': 'bold', 'border-top': '1px solid gray'})
-            $('.tap-2').css({'color': 'black', 'font-weight': 'bold', 'border-top': '2px solid black'})
-            $('.tap-3').css({'color': 'gray', 'font-weight': 'bold', 'border-top': '1px solid gray'})
-
-        }
-
-        function chagecolor3() {
-            $('.tap-1').css({'color': 'gray', 'font-weight': 'bold', 'border-top': '1px solid gray'})
-            $('.tap-2').css({'color': 'gray', 'font-weight': 'bold', 'border-top': '1px solid gray'})
-            $('.tap-3').css({'color': 'black', 'font-weight': 'bold', 'border-top': '2px solid black'})
-        }
-
         function out() {
             $.ajax({
                 type: "GET",
                 url: "/out",
                 data: {},
                 success: function (response) {
-                location.href = "/"
-
+                  location.href = "/"
                 }
             })
         }
@@ -287,8 +196,8 @@
 <div class="container">
     <div class="row flex nav-box" id="nav-box">
         <div class="col-5">
-            <a href="/profil" style="margin-right: 10px;font-weight: bold;">My</a>
-            <a href="/random">랜덤</a></div>
+            <a href="/profil" style="margin-right: 10px">My</a>
+            <a href="/random" style="font-weight: bold;">랜덤</a></div>
         <div class="col-8 nav2-wrap">
             <!--            <a href="/profil" style="margin-right: 10px;font-weight: bold">내 프로필</a>-->
             <a href="/record" style="margin-right: 10px">기록하기</a>
@@ -306,23 +215,7 @@
 <!--        </div>-->
 <!--    </div>-->
 <!--</div>-->
-<div class="container">
-    <div class="row">
-        <div class="col-12">
-            <div class="flex">
-                <div class="tap tap-1">
-                    <div onclick=recordGet()>both</div>
-                </div>
-                <div class="tap tap-2" onclick=recordGetGood()>
-                    <div>good</div>
-                </div>
-                <div class="tap tap-3" onclick=recordGetbad()>
-                    <div>bad</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 <div class="container">
     <div class="row">
         <div class="col-12" id="why-wrap" style="padding-bottom: 80px"></div>

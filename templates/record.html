@@ -5,26 +5,121 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="../static/record.css">
+    <meta property="og:title" content="감정기록"/>
+    <meta property="og:description" content="감정을 기록합니다. 그렇게 메타인지를 향상시킵니다. 나를 알아갑니다."/>
+    <meta property="og:image" content="../static/feeling.jpg"/>
+    <title>감정기록</title>
+    <!--    <link rel="stylesheet" href="../static/record.css">-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+
+        a {
+            cursor: pointer;
+        }
+
+        .flex {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-box {
+            width: 100%;
+            height: 20vh;
+        }
+
+        .nav-box a {
+            font-size: 24px;
+            text-decoration: none;
+            color: black;
+            cursor: pointer;
+        }
+
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 5px;
+            }
+
+            #nav-box div a {
+                font-size: 18px;
+            }
+
+            #nav-box {
+                margin: 0;
+            }
+        }
+
+        .nav-box a:hover {
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            text-underline: none;
+            color: black;
+            cursor: pointer;
+        }
+
+        .nav2-wrap {
+            /*background-color: blueviolet;*/
+            text-align: right;
+        }
+
+        .record-title-wrap {
+            /*background-color: blueviolet;*/
+            text-align: center;
+        }
+
+        .record-title {
+            font-size: 54px;
+            font-weight: bold;
+            margin-bottom: 50px;
+        }
+
+        .flex-center {
+            height: 60vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+ #btn {
+            outline: none;
+            border: 0;
+            background-color: transparent;
+            cursor: pointer;
+            font-size: 24px;
+        }
+
+        @media screen and (max-width: 768px) {
+            #btn {
+                outline: none;
+                border: 0;
+                background-color: transparent;
+                cursor: pointer;
+                font-size: 18px;
+                margin-right: 10px;
+            }
+
+        }
+    </style>
     <script>
 
         function recordPostGood() {
             let date = new Date()
             let year = date.getFullYear()
-            let month = date.getMonth()+1
+            let month = date.getMonth() + 1
             let day = date.getDate()
             let hour = date.getHours()
             let minutes = date.getMinutes()
+            let number = date.getTime()
             let time = year + '년 ' + month + '월 ' + day + '일 ' + hour + '시 ' + minutes + '분  '
             let why = $('#why').val();
             $.ajax({
                 type: "POST", // GET 방식으로 요청한다.
                 url: "/record-post",
-                data: {'why': why, 'stat': 'good', 'time': time}, // 요청하면서 함께 줄 데이터 (GET 요청시엔 비워두세요)
+                data: {'why': why, 'stat': 'good', 'time': time, 'number': number}, // 요청하면서 함께 줄 데이터 (GET 요청시엔 비워두세요)
                 success: function (response) { // 서버에서 준 결과를 response라는 변수에 담음
                     $(location).attr('href', '/');
 
@@ -35,16 +130,17 @@
         function recordPostBad() {
             let date = new Date()
             let year = date.getFullYear()
-            let month = date.getMonth()+1
+            let month = date.getMonth() + 1
             let day = date.getDate()
             let hour = date.getHours()
             let minutes = date.getMinutes()
+            let number = date.getTime()
             let time = year + '년 ' + month + '월 ' + day + '일 ' + hour + '시 ' + minutes + '분  '
             let why = $('#why').val();
             $.ajax({
                 type: "POST", // GET 방식으로 요청한다.
                 url: "/record-post",
-                data: {'why': why, 'stat': 'bad', 'time': time}, // 요청하면서 함께 줄 데이터 (GET 요청시엔 비워두세요)
+                data: {'why': why, 'stat': 'bad', 'time': time, 'number': number}, // 요청하면서 함께 줄 데이터 (GET 요청시엔 비워두세요)
                 success: function (response) { // 서버에서 준 결과를 response라는 변수에 담음
                     $(location).attr('href', '/');
                 }
@@ -75,7 +171,7 @@
                 url: "/out",
                 data: {},
                 success: function (response) {
-                    $(location).attr('href', '/');
+                     location.href = "/"
 
                 }
             })
@@ -84,14 +180,16 @@
 </head>
 <body>
 <div class="container">
-    <div class="row flex nav-box" style=" width: 100%;
+    <div class="row flex nav-box" id="nav-box" style=" width: 100%;
     height: 20vh;">
-        <div class="col-1">
-            <a href="/profil">홈</a></div>
-        <div class="col-7 nav2-wrap">
-<!--            <a href="/profil" style="margin-right: 10px">내 프로필</a>-->
+        <div class="col-5">
+            <a href="/profil" style="margin-right: 10px">My</a>
+            <a href="/random">랜덤</a></div>
+        <div class="col-8 nav2-wrap">
+            <!--            <a href="/profil" style="margin-right: 10px">내 프로필</a>-->
             <a href="/record" style="font-weight: bold;margin-right: 10px">기록하기</a>
-            <a href="" onclick="out()">로그아웃</a>
+           <button id="btn" onclick="out()">로그아웃
+            </button>
         </div>
     </div>
     <div class="container">

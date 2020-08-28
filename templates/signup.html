@@ -5,11 +5,37 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="../static/signup.css">
+    <meta property="og:title" content="감정기록"/>
+    <meta property="og:description" content="감정을 기록합니다. 그렇게 메타인지를 향상시킵니다. 나를 알아갑니다."/>
+    <meta property="og:image" content="../static/feeling.jpg"/>
+    <title>감정기록</title>
+    <!--    <link rel="stylesheet" href="../static/signup.css">-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+
+        .signup-title-wrap {
+            /*background-color: blueviolet;*/
+            text-align: center;
+        }
+
+        .signup-title {
+            font-size: 54px;
+            font-weight: bold;
+            margin-bottom: 50px;
+        }
+
+        .flex-center {
+            padding: 0 50px;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+    </style>
     <script>
         function signup_db() {
             let id = $('#id').val()
@@ -24,7 +50,10 @@
                     url: "/signup_db",
                     data: {id: id, password: pw},
                     success: function (response) {
-                        $(location).attr('href', '/');
+                        alert('가입이 완료되었습니다!')
+                        location.href = "/signin"
+                    }, error: function (response) {
+                        alert('가입을 다시 시도해주세요!')
                     }
                 })
             }
